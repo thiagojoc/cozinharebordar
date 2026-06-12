@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#4A6680">
+<title>Cantinho da Ise</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root {
+  --azul: #4A6680;
+  --azul-escuro: #3A5268;
+  --azul-claro: #E8EFF5;
+  --azul-borda: #C8D8E4;
+  --bege: #EEE8DC;
+  --bege-fundo: #F7F3EC;
+  --bege-card: #FFFFFF;
+  --bege-header: #E8EFF5;
+  --dourado: #B8A065;
+  --dourado-claro: #D4BC88;
+  --texto: #2A3A4A;
+  --texto-suave: #7A8FA6;
+  --texto-card: #2A3A4A;
+  --border: #C8D8E4;
+  --danger: #C45C5C;
+  --verde: #3B7D3B;
+  --verde-bg: #D8EDBE;
+  --verde-border: #7AAF3A;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Jost', Arial, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; overflow: hidden; font-family: var(--sans); background: var(--bege); color: var(--texto); }
+
+/* ── TELAS ── */
+.screen { display: none; flex-direction: column; height: 100vh; overflow: hidden; }
+.screen.active { display: flex; }
+
+/* ══ SPLASH ══ */
+#splash { background: var(--bege); align-items: center; justify-content: space-between; padding: 48px 32px 32px; }
+.splash-top { width: 100%; display: flex; justify-content: space-between; font-size: 11px; color: var(--texto-suave); font-family: var(--sans); font-weight: 300; }
+.splash-center { display: flex; flex-direction: column; align-items: center; gap: 16px; flex: 1; justify-content: center; }
+.splash-title { font-family: var(--serif); font-size: clamp(36px, 10vw, 52px); font-weight: 300; color: var(--texto); text-align: center; line-height: 1.1; }
+.splash-title em { font-style: italic; }
+.splash-sub { font-family: var(--serif); font-style: italic; font-size: 14px; color: var(--azul); letter-spacing: .07em; text-align: center; }
+.splash-divider { display: flex; align-items: center; gap: 12px; width: 100%; justify-content: center; }
+.splash-line { flex: 1; height: .5px; background: var(--dourado); max-width: 70px; }
+.splash-diamond { width: 6px; height: 6px; background: var(--dourado); transform: rotate(45deg); }
+.splash-btn { background: transparent; color: var(--texto); font-family: var(--serif); font-size: 12px; letter-spacing: .24em; padding: 12px 48px; border: .5px solid var(--dourado); cursor: pointer; text-transform: uppercase; transition: background .2s; }
+.splash-btn:hover { background: var(--dourado); color: #fff; }
+.splash-footer { font-family: var(--sans); font-weight: 300; font-size: 10px; color: var(--dourado); letter-spacing: .05em; text-align: center; font-style: italic; }
+
+/* ══ LAYOUT APP ══ */
+#app { background: var(--bege-fundo); }
+.topbar { background: var(--azul); padding: 14px 16px 12px; border-bottom: .5px solid var(--azul-escuro); flex-shrink: 0; }
+.topbar-row { display: flex; align-items: center; justify-content: space-between; }
+.topbar-title { font-family: var(--serif); font-size: 22px; font-weight: 400; color: #F5F0E8; }
+.topbar-sub { font-family: var(--sans); font-weight: 300; font-size: 10px; color: #B8CDD8; letter-spacing: .05em; margin-top: 2px; }
+.topbar-back { background: none; border: none; color: #F5F0E8; font-size: 20px; cursor: pointer; padding: 0; display: flex; align-items: center; gap: 8px; }
+.topbar-back .topbar-title { font-size: 18px; }
+.topbar-actions { display: flex; gap: 12px; align-items: center; }
+.topbar-actions button { background: none; border: none; cursor: pointer; color: #F5F0E8; font-size: 20px; padding: 0; display: flex; align-items: center; }
+.topbar-actions button.fav-on { color: var(--dourado); }
+
+/* ── SCROLL BODY ── */
+.page-body { flex: 1; overflow-y: auto; padding: 14px 12px 80px; display: flex; flex-direction: column; gap: 14px; -webkit-overflow-scrolling: touch; }
+
+/* ── SEÇÃO ── */
+.sec-label { font-family: var(--sans); font-weight: 300; font-size: 9px; color: var(--texto-suave); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 6px; }
+
+/* ── CARD ── */
+.card { background: var(--bege-card); border-radius: 10px; border: .5px solid var(--border); overflow: hidden; }
+.card-hdr { padding: 9px 13px; background: var(--bege-header); border-bottom: .5px solid var(--border); font-family: var(--serif); font-size: 14px; color: var(--texto); display: flex; align-items: center; justify-content: space-between; }
+.card-hdr-sub { font-family: var(--sans); font-weight: 300; font-size: 9px; color: var(--azul); border: .5px solid var(--border); padding: 2px 8px; cursor: pointer; background: #fff; }
+.card-body { padding: 10px 13px; display: flex; flex-direction: column; }
+
+/* ── ROW ── */
+.row { display: flex; align-items: center; gap: 9px; padding: 6px 0; border-bottom: .5px solid #EEE8DE; }
+.row:last-child { border-bottom: none; }
+.rdot { width: 1px; height: 14px; background: var(--dourado); flex-shrink: 0; }
+.row-name { font-family: var(--serif); font-size: 13px; color: var(--texto); flex: 1; }
+.tag { font-family: var(--sans); font-weight: 300; font-size: 9px; color: var(--azul); border: .5px solid var(--border); padding: 2px 7px; background: var(--bege-header); white-space: nowrap; }
+.tag.verde { color: var(--verde); border-color: var(--verde-border); background: var(--verde-bg); }
+.tag.dourado { color: #7A6030; border-color: var(--dourado); background: #F5EEE0; }
+
+/* ── REF CARD ── */
+.ref-item { background: var(--bege-card); border-radius: 10px; border: .5px solid var(--border); padding: 11px 13px; display: flex; align-items: center; gap: 10px; margin-bottom: 6px; cursor: pointer; transition: background .15s; }
+.ref-item:hover { background: var(--bege-header); }
+.ref-num { font-family: var(--serif); font-size: 22px; font-weight: 300; color: var(--border); min-width: 24px; font-style: italic; line-height: 1; }
+.ref-info { flex: 1; }
+.ref-name { font-family: var(--serif); font-size: 13px; color: var(--texto); }
+.ref-src { font-family: var(--sans); font-weight: 300; font-size: 9.5px; color: var(--texto-suave); margin-top: 1px; }
+.ref-badge { font-family: var(--sans); font-weight: 300; font-size: 9px; color: var(--azul); border: .5px solid var(--border); padding: 2px 7px; background: var(--bege-header); }
+
+/* ── NAV ── */
+.nav { display: flex; background: var(--azul); border-top: .5px solid var(--azul-escuro); padding: 8px 0 max(12px, env(safe-area-inset-bottom)); position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; }
+.nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; padding: 2px 0; border: none; background: none; }
+.nav-item i { font-size: 20px; color: #B8CDD8; transition: color .15s; }
+.nav-item span { font-family: var(--sans); font-weight: 300; font-size: 8px; color: #B8CDD8; transition: color .15s; }
+.nav-item.active i, .nav-item.active span { color: #F5F0E8; }
+
+/* ══ PÁGINAS INTERNAS ══ */
+.inner-page { display: none; flex-direction: column; height: 100%; }
+.inner-page.active { display: flex; }
+
+/* ══ RECEITA ABERTA ══ */
+.recipe-hero { width: 100%; height: 160px; background: var(--bege-header); border-radius: 10px; border: .5px solid var(--border); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; flex-shrink: 0; }
+.recipe-hero img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; }
+.recipe-hero-emoji { font-size: 56px; }
+.add-photo-btn { position: absolute; bottom: 10px; right: 10px; background: var(--azul); color: #F5F0E8; font-size: 10px; font-family: var(--sans); padding: 6px 12px; border-radius: 20px; cursor: pointer; border: none; display: flex; align-items: center; gap: 4px; }
+.badges-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.ing-row { display: flex; align-items: center; gap: 9px; padding: 6px 0; border-bottom: .5px solid #EEE8DE; }
+.ing-row:last-child { border-bottom: none; }
+.chk { width: 16px; height: 16px; border-radius: 3px; border: 1px solid var(--border); background: #fff; flex-shrink: 0; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .15s; }
+.chk.on { background: var(--azul); border-color: var(--azul); color: #fff; font-size: 10px; }
+.ing-txt { font-family: var(--serif); font-size: 13px; color: var(--texto); flex: 1; transition: color .2s; }
+.ing-txt.done { color: #9AAAB8; text-decoration: line-through; }
+.step-row { display: flex; align-items: flex-start; gap: 9px; padding: 7px 0; border-bottom: .5px solid #EEE8DE; }
+.step-row:last-child { border-bottom: none; }
+.snum { width: 22px; height: 22px; border-radius: 50%; background: var(--azul-claro); display: flex; align-items: center; justify-content: center; font-size: 10px; font-family: var(--sans); color: var(--texto); flex-shrink: 0; margin-top: 1px; cursor: pointer; transition: background .15s; border: none; }
+.snum.on { background: var(--azul); color: #fff; }
+.step-txt { font-family: var(--serif); font-size: 13px; color: var(--texto); flex: 1; line-height: 1.5; }
+.step-txt.done { color: #9AAAB8; }
+.forno-btn { display: inline-flex; align-items: center; gap: 5px; font-size: 9px; color: var(--azul); border: .5px solid var(--border); padding: 4px 9px; font-family: var(--sans); margin-top: 5px; background: var(--bege-header); border-radius: 3px; cursor: pointer; }
+
+/* ══ TIMER MODAL ══ */
+.timer-overlay { display: none; position: fixed; inset: 0; background: rgba(42,58,74,.7); z-index: 200; align-items: flex-end; justify-content: center; }
+.timer-overlay.active { display: flex; }
+.timer-sheet { background: var(--azul); border-radius: 20px 20px 0 0; padding: 28px 32px 40px; width: 100%; max-width: 480px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.timer-title { font-family: var(--serif); font-size: 16px; color: #B8CDD8; font-style: italic; }
+.timer-display { font-family: var(--serif); font-size: 56px; color: #F5F0E8; letter-spacing: .06em; line-height: 1; }
+.timer-btns { display: flex; gap: 16px; }
+.timer-btn { width: 52px; height: 52px; border-radius: 50%; border: none; cursor: pointer; font-size: 20px; display: flex; align-items: center; justify-content: center; }
+.timer-btn.play { background: var(--dourado); color: #fff; }
+.timer-btn.reset { background: rgba(255,255,255,.12); color: #B8CDD8; }
+.timer-btn.close { background: rgba(255,255,255,.08); color: #B8CDD8; font-size: 14px; }
+.timer-label { font-family: var(--sans); font-weight: 300; font-size: 11px; color: #B8CDD8; letter-spacing: .05em; }
+
+/* ══ FAVORITOS ══ */
+.fav-card { background: var(--bege-card); border-radius: 10px; border: .5px solid var(--border); padding: 11px 13px; display: flex; align-items: center; gap: 10px; margin-bottom: 6px; cursor: pointer; transition: background .15s; }
+.fav-card:hover { background: var(--bege-header); }
+.fav-emoji { font-size: 22px; width: 40px; height: 40px; background: var(--bege-header); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.fav-name { font-family: var(--serif); font-size: 13px; color: var(--texto); }
+.fav-meta { font-family: var(--sans); font-weight: 300; font-size: 9.5px; color: var(--texto-suave); margin-top: 2px; }
+.fav-heart { font-size: 18px; color: var(--dourado); }
+
+/* ══ PROGRESSO BORDADO ══ */
+.pbar-wrap { background: var(--bege-header); border-radius: 3px; height: 5px; flex: 1; max-width: 90px; }
+.pbar-fill { background: var(--dourado); border-radius: 3px; height: 5px; transition: width .4s; }
+
+/* ══ SEMANA ══ */
+.week-row { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; }
+.wday { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.wlbl { font-size: 8px; color: var(--texto-suave); font-family: var(--sans); }
+.wdot { width: 26px; height: 26px; border-radius: 50%; border: .5px solid var(--border); background: #fff; display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--dourado-claro); font-family: var(--sans); cursor: pointer; transition: background .15s; }
+.wdot.on { background: var(--azul); border-color: var(--azul); color: #fff; }
+
+/* ══ DIÁRIO ══ */
+.note-row { display: flex; align-items: flex-start; gap: 8px; padding: 7px 0; border-bottom: .5px solid #EEE8DE; }
+.note-row:last-child { border-bottom: none; }
+.note-ico { font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+.note-txt { font-family: var(--serif); font-size: 13px; color: var(--texto); flex: 1; line-height: 1.4; }
+.note-date { font-family: var(--sans); font-weight: 300; font-size: 9px; color: var(--dourado); margin-top: 2px; }
+
+/* ══ REFERÊNCIAS LINK ══ */
+.link-box { display: flex; align-items: center; gap: 8px; background: #fff; border: .5px solid var(--border); padding: 10px 13px; border-radius: 8px; }
+.link-input { font-family: var(--sans); font-weight: 300; font-size: 12px; color: var(--texto); border: none; outline: none; flex: 1; background: transparent; }
+.link-input::placeholder { color: #B8CDD8; font-style: italic; }
+.pills-row { display: flex; flex-wrap: wrap; gap: 5px; }
+.pill { font-family: var(--sans); font-weight: 300; font-size: 9px; color: var(--azul); border: .5px solid var(--border); padding: 3px 10px; background: var(--bege-header); cursor: pointer; border-radius: 20px; transition: background .15s; }
+.pill.active { background: var(--azul); color: #fff; border-color: var(--azul); }
+.saved-ref { background: #fff; border-radius: 8px; border: .5px solid var(--border); padding: 9px 13px; display: flex; align-items: center; gap: 9px; margin-bottom: 5px; }
+.saved-type { font-family: var(--sans); font-weight: 300; font-size: 9px; color: var(--azul); border: .5px solid var(--border); padding: 2px 7px; background: var(--bege-header); white-space: nowrap; }
+.saved-name { font-family: var(--serif); font-size: 13px; color: var(--texto); }
+.saved-src { font-family: var(--sans); font-weight: 300; font-size: 9.5px; color: var(--texto-suave); margin-top: 1px; }
+.saved-del { font-size: 15px; color: #C8D8E4; cursor: pointer; border: none; background: none; }
+
+/* ══ MODO LEITURA ══ */
+#modo-leitura { display: none; position: fixed; inset: 0; background: var(--bege-fundo); z-index: 300; flex-direction: column; overflow-y: auto; padding: 24px 20px 40px; gap: 16px; }
+#modo-leitura.active { display: flex; }
+.ml-title { font-family: var(--serif); font-size: 28px; color: var(--texto); font-style: italic; }
+.ml-step { display: flex; gap: 12px; padding: 14px 0; border-bottom: .5px solid var(--border); }
+.ml-num { width: 28px; height: 28px; border-radius: 50%; background: var(--azul); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-family: var(--sans); flex-shrink: 0; }
+.ml-txt { font-family: var(--serif); font-size: 18px; color: var(--texto); flex: 1; line-height: 1.6; }
+.ml-close { background: var(--azul); color: #fff; border: none; border-radius: 8px; padding: 14px; font-family: var(--sans); font-size: 13px; letter-spacing: .08em; cursor: pointer; margin-top: 8px; }
+
+/* ══ LISTA DE COMPRAS ══ */
+.compra-row { display: flex; align-items: center; gap: 9px; padding: 6px 0; border-bottom: .5px solid #EEE8DE; }
+.compra-row:last-child { border-bottom: none; }
+.compra-chk { width: 16px; height: 16px; border-radius: 50%; border: 1px solid var(--border); background: #fff; flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .15s; }
+.compra-chk.on { background: var(--azul); border-color: var(--azul); color: #fff; font-size: 10px; }
+.compra-txt { font-family: var(--serif); font-size: 13px; color: var(--texto); flex: 1; }
+.compra-txt.done { color: #9AAAB8; text-decoration: line-through; }
+.compra-src { font-family: var(--sans); font-weight: 300; font-size: 9px; color: var(--texto-suave); }
+
+/* ══ QUERO FAZER ══ */
+.wishlist-card { background: #fff; border-radius: 10px; border: .5px solid var(--border); padding: 11px 13px; display: flex; align-items: center; gap: 10px; margin-bottom: 6px; cursor: pointer; }
+.wishlist-emoji { font-size: 20px; width: 36px; height: 36px; background: var(--bege-header); border-radius: 7px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.wishlist-name { font-family: var(--serif); font-size: 13px; color: var(--texto); }
+.wishlist-meta { font-family: var(--sans); font-weight: 300; font-size: 9.5px; color: var(--texto-suave); margin-top: 2px; }
+.wishlist-del { font-size: 16px; color: #C8D8E4; cursor: pointer; border: none; background: none; }
+
+/* ══ FILTROS ══ */
+.filtros-row { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.filtros-row::-webkit-scrollbar { display: none; }
+.filtro-btn { font-family: var(--sans); font-weight: 300; font-size: 10px; color: var(--azul); border: .5px solid var(--border); padding: 5px 12px; background: #fff; white-space: nowrap; border-radius: 20px; cursor: pointer; flex-shrink: 0; transition: background .15s; }
+.filtro-btn.active { background: var(--azul); color: #fff; border-color: var(--azul); }
+
+/* ══ MODAL GENÉRICO ══ */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(42,58,74,.6); z-index: 200; align-items: flex-end; justify-content: center; }
+.modal-overlay.active { display: flex; }
+.modal-sheet { background: var(--bege-fundo); border-radius: 20px 20px 0 0; padding: 24px 20px 40px; width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 14px; }
+.modal-title { font-family: var(--serif); font-size: 20px; color: var(--texto); }
+.modal-input { font-family: var(--serif); font-size: 14px; color: var(--texto); border: .5px solid var(--border); background: #fff; padding: 10px 13px; border-radius: 8px; width: 100%; outline: none; resize: none; }
+.modal-btn { background: var(--azul); color: #fff; border: none; border-radius: 8px; padding: 13px; font-family: var(--sans); font-size: 13px; letter-spacing: .08em; cursor: pointer; }
+.modal-btn-sec { background: transparent; color: var(--texto-suave); border: .5px solid var(--border); border-radius: 8px; padding: 13px; font-family: var(--sans); font-size: 13px; cursor: pointer; }
+
+/* ══ VAZIO ══ */
+.empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; gap: 10px; }
+.empty-state .empty-icon { font-size: 40px; opacity: .4; }
+.empty-state p { font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--texto-suave); text-align: center; }
+.empty-state button { background: var(--azul); color: #fff; border: none; border-radius: 8px; padding: 10px 24px; font-family: var(--sans); font-size: 12px; cursor: pointer; margin-top: 4px; }
+
+/* ══ TOAST ══ */
+.toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--azul-escuro); color: #F5F0E8; font-family: var(--sans); font-size: 12px; padding: 10px 20px; border-radius: 20px; opacity: 0; transition: all .3s; z-index: 500; pointer-events: none; white-space: nowrap; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ══ FOTO GRID ══ */
+.photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.photo-cell { aspect-ratio: 1; border-radius: 8px; border: .5px solid var(--border); background: var(--bege-header); display: flex; align-items: center; justify-content: center; font-size: 28px; position: relative; overflow: hidden; cursor: pointer; }
+.photo-cell img { width: 100%; height: 100%; object-fit: cover; }
+.photo-add { border: .5px dashed var(--border); background: transparent; flex-direction: column; gap: 4px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.photo-add-icon { font-size: 22px; color: var(--border); }
+.photo-add-txt { font-size: 9px; color: var(--border); font-family: var(--sans); letter-spacing: .06em; }
+input[type=file] { display: none; }
+
+/* Scrollbar minimal */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ SPLASH ══════════════ -->
+<div id="splash" class="screen active">
+  <div class="splash-top"><span>9:41</span><span>●●●</span></div>
+  <div class="splash-center">
+    <svg width="220" height="28" viewBox="0 0 220 28" role="img" aria-hidden="true">
+      <g stroke="#B8A065" stroke-width=".65" fill="none">
+        <line x1="0" y1="14" x2="220" y2="14"/>
+        <rect x="105" y="9" width="10" height="10" transform="rotate(45 110 14)" fill="#EEE8DC" stroke="#B8A065" stroke-width=".9"/>
+        <line x1="68" y1="10" x2="68" y2="18"/><line x1="152" y1="10" x2="152" y2="18"/>
+        <circle cx="34" cy="14" r="2" fill="#B8A065" stroke="none"/>
+        <circle cx="186" cy="14" r="2" fill="#B8A065" stroke="none"/>
+      </g>
+    </svg>
+    <div class="splash-title"><em>Cantinho</em><br>da Ise</div>
+    <div class="splash-sub">cozinha com afeto · bordado com amor</div>
+    <div class="splash-divider">
+      <div class="splash-line"></div>
+      <div class="splash-diamond"></div>
+      <div class="splash-line"></div>
+    </div>
+    <svg width="220" height="40" viewBox="0 0 220 40" role="img" aria-hidden="true">
+      <g stroke="#B8A065" stroke-width=".7" fill="none" opacity=".9">
+        <line x1="0" y1="10" x2="220" y2="10"/>
+        <path d="M84 10 C92 21 101 26 110 28 C119 26 128 21 136 10" stroke="#B8A065" stroke-width=".9"/>
+        <circle cx="110" cy="30" r="2.4" fill="#B8A065" stroke="none"/>
+        <path d="M56 10 C59 16 64 19 70 19" stroke-width=".6"/>
+        <path d="M164 10 C161 16 156 19 150 19" stroke-width=".6"/>
+        <circle cx="70" cy="20" r="1.6" fill="#C8B878" stroke="none"/>
+        <circle cx="150" cy="20" r="1.6" fill="#C8B878" stroke="none"/>
+        <line x1="108.5" y1="33" x2="108.5" y2="39"/><line x1="111.5" y1="33" x2="111.5" y2="39"/>
+      </g>
+    </svg>
+    <button class="splash-btn" onclick="entrar()">Entrar</button>
+  </div>
+  <div class="splash-footer">Criado com amor, por Thiago Caetano</div>
+</div>
+
+<!-- ══════════════ APP ══════════════ -->
+<div id="app" class="screen">
+
+  <!-- ── INÍCIO ── -->
+  <div id="pg-inicio" class="inner-page active" style="flex-direction:column;height:100%">
+    <div class="topbar">
+      <div class="topbar-row">
+        <div>
+          <div class="topbar-title">Cantinho da Ise</div>
+          <div class="topbar-sub" id="greeting-sub">Boa tarde, Ise ✦</div>
+        </div>
+      </div>
+    </div>
+    <div class="page-body">
+      <div>
+        <div class="sec-label">Sugestão do Dia</div>
+        <div class="card">
+          <div class="card-hdr">🍽 Receitas para Hoje</div>
+          <div class="card-body">
+            <div class="row" onclick="abrirReceita(0)" style="cursor:pointer"><div class="rdot"></div><div class="row-name">Bolo de Cenoura com Farinha de Arroz</div><span class="tag">Fácil</span></div>
+            <div class="row" onclick="abrirReceita(1)" style="cursor:pointer"><div class="rdot"></div><div class="row-name">Pão de Queijo Caseiro</div><span class="tag">Clássico</span></div>
+            <div class="row" onclick="abrirReceita(2)" style="cursor:pointer"><div class="rdot"></div><div class="row-name">Nhoque de Batata-Doce</div><span class="tag verde">Sem glúten</span></div>
+            <div class="row" onclick="abrirReceita(3)" style="cursor:pointer"><div class="rdot"></div><div class="row-name">Tapioca de Frango Desfiado</div><span class="tag">Rápida</span></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="sec-label">Referências em Destaque</div>
+        <div class="ref-item" onclick="showToast('Abrindo Chef Cris Gutierrez…')">
+          <div class="ref-num">01</div>
+          <div class="ref-info"><div class="ref-name">Chef Cris Gutierrez</div><div class="ref-src">Escola de panificação sem glúten</div></div>
+          <span class="ref-badge">escola</span>
+        </div>
+        <div class="ref-item" onclick="showToast('Abrindo Marta Midori…')">
+          <div class="ref-num">02</div>
+          <div class="ref-info"><div class="ref-name">Marta Midori</div><div class="ref-src">100+ receitas testadas sem glúten</div></div>
+          <span class="ref-badge">youtube</span>
+        </div>
+        <div class="ref-item" onclick="showToast('Abrindo Mãe de Celíaca…')">
+          <div class="ref-num">03</div>
+          <div class="ref-info"><div class="ref-name">Mãe de Celíaca</div><div class="ref-src">Vida sem glúten no campo</div></div>
+          <span class="ref-badge">youtube</span>
+        </div>
+      </div>
+      <div>
+        <div class="sec-label">Mini Curso em Destaque</div>
+        <div class="card">
+          <div class="card-body">
+            <div class="row" style="cursor:pointer" onclick="showToast('Abrindo curso…')">
+              <div style="width:42px;height:30px;border-radius:5px;background:var(--azul);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <i class="ti ti-player-play" style="color:#F5F0E8;font-size:14px"></i>
+              </div>
+              <div style="flex:1">
+                <div style="font-family:var(--serif);font-size:13px;color:var(--texto)">Padeiro Básico Glúten Free</div>
+                <div style="font-family:var(--sans);font-weight:300;font-size:9.5px;color:var(--texto-suave)">Escola Chef Cris Gutierrez</div>
+              </div>
+              <span class="tag verde">iniciante</span>
+            </div>
+            <div class="row" style="cursor:pointer" onclick="showToast('Abrindo curso…')">
+              <div style="width:42px;height:30px;border-radius:5px;background:var(--dourado);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <i class="ti ti-player-play" style="color:#fff;font-size:14px"></i>
+              </div>
+              <div style="flex:1">
+                <div style="font-family:var(--serif);font-size:13px;color:var(--texto)">8 Pontos Básicos do Bordado</div>
+                <div style="font-family:var(--sans);font-weight:300;font-size:9.5px;color:var(--texto-suave)">YouTube — Bordado Livre BR</div>
+              </div>
+              <span class="tag verde">iniciante</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RECEITAS ── -->
+  <div id="pg-receitas" class="inner-page" style="flex-direction:column;height:100%">
+    <div class="topbar">
+      <div class="topbar-row">
+        <div><div class="topbar-title">Receitas</div><div class="topbar-sub">Todas sem glúten ✦</div></div>
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="filtros-row" id="filtros-receitas">
+        <button class="filtro-btn active" onclick="filtrar(this,'todas')">Todas</button>
+        <button class="filtro-btn" onclick="filtrar(this,'doce')">Doces</button>
+        <button class="filtro-btn" onclick="filtrar(this,'salgado')">Salgadas</button>
+        <button class="filtro-btn" onclick="filtrar(this,'pao')">Pães</button>
+        <button class="filtro-btn" onclick="filtrar(this,'rapida')">Rápidas</button>
+        <button class="filtro-btn" onclick="filtrar(this,'festa')">Festa</button>
+      </div>
+      <div>
+        <div class="sec-label">Minhas Receitas</div>
+        <div class="card" id="lista-receitas">
+          <div class="card-body" id="receitas-body">
+            <div class="row" onclick="abrirReceita(0)" style="cursor:pointer" data-cat="doce"><div class="rdot"></div><div class="row-name">Bolo de Cenoura com Farinha de Arroz</div><span class="tag">45 min</span></div>
+            <div class="row" onclick="abrirReceita(1)" style="cursor:pointer" data-cat="salgado"><div class="rdot"></div><div class="row-name">Pão de Queijo Caseiro</div><span class="tag">30 min</span></div>
+            <div class="row" onclick="abrirReceita(2)" style="cursor:pointer" data-cat="salgado"><div class="rdot"></div><div class="row-name">Nhoque de Batata-Doce</div><span class="tag">40 min</span></div>
+            <div class="row" onclick="abrirReceita(3)" style="cursor:pointer" data-cat="salgado rapida"><div class="rdot"></div><div class="row-name">Tapioca de Frango Desfiado</div><span class="tag">15 min</span></div>
+            <div class="row" onclick="abrirReceita(4)" style="cursor:pointer" data-cat="pao"><div class="rdot"></div><div class="row-name">Pão de Mandioca sem Glúten</div><span class="tag">60 min</span></div>
+            <div class="row" onclick="abrirReceita(5)" style="cursor:pointer" data-cat="doce festa"><div class="rdot"></div><div class="row-name">Brownie de Chocolate sem Farinha</div><span class="tag">35 min</span></div>
+            <div class="row" onclick="abrirReceita(6)" style="cursor:pointer" data-cat="salgado rapida"><div class="rdot"></div><div class="row-name">Omelete de Abobrinha com Queijo</div><span class="tag">10 min</span></div>
+            <div class="row" onclick="abrirReceita(7)" style="cursor:pointer" data-cat="doce"><div class="rdot"></div><div class="row-name">Panqueca de Banana com Aveia</div><span class="tag">20 min</span></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="sec-label">Quero Fazer</div>
+        <div id="quero-fazer-list">
+          <div class="wishlist-card">
+            <div class="wishlist-emoji">🍰</div>
+            <div style="flex:1"><div class="wishlist-name">Cheesecake de Maracujá</div><div class="wishlist-meta">Salvo da Marta Midori</div></div>
+            <button class="wishlist-del" onclick="showToast('Removido da lista')">✕</button>
+          </div>
+          <div class="wishlist-card">
+            <div class="wishlist-emoji">🥐</div>
+            <div style="flex:1"><div class="wishlist-name">Croissant Glúten Free</div><div class="wishlist-meta">Escola Chef Cris</div></div>
+            <button class="wishlist-del" onclick="showToast('Removido da lista')">✕</button>
+          </div>
+        </div>
+        <button onclick="abrirModal('modal-wishlist')" style="width:100%;background:transparent;border:.5px dashed var(--border);color:var(--texto-suave);font-family:var(--sans);font-size:12px;padding:10px;border-radius:8px;cursor:pointer;margin-top:2px">+ Adicionar à lista</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BORDADO ── -->
+  <div id="pg-bordado" class="inner-page" style="flex-direction:column;height:100%">
+    <div class="topbar">
+      <div class="topbar-row">
+        <div><div class="topbar-title">Bordado</div><div class="topbar-sub">Técnicas e projetos ✦</div></div>
+      </div>
+    </div>
+    <div class="page-body">
+      <div>
+        <div class="sec-label">Meu Progresso</div>
+        <div class="card">
+          <div class="card-body">
+            <div class="row"><div class="row-name">Ponto Cruz</div><div class="pbar-wrap"><div class="pbar-fill" style="width:70%"></div></div><span class="tag">70%</span></div>
+            <div class="row"><div class="row-name">Ponto Francês</div><div class="pbar-wrap"><div class="pbar-fill" style="width:30%"></div></div><span class="tag">30%</span></div>
+            <div class="row"><div class="row-name">Bordado Livre</div><div class="pbar-wrap"><div class="pbar-fill" style="width:15%"></div></div><span class="tag">15%</span></div>
+            <div class="row"><div class="row-name">Ponto Cetim</div><div class="pbar-wrap"><div class="pbar-fill" style="width:5%"></div></div><span class="tag">5%</span></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="sec-label">Mini Cursos de Bordado</div>
+        <div class="card">
+          <div class="card-body">
+            <div class="row" style="cursor:pointer" onclick="showToast('Abrindo aula…')">
+              <div style="width:42px;height:30px;border-radius:5px;background:var(--azul);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-player-play" style="color:#F5F0E8;font-size:14px"></i></div>
+              <div style="flex:1"><div style="font-family:var(--serif);font-size:13px;color:var(--texto)">8 Pontos Básicos do Bordado Livre</div><div style="font-family:var(--sans);font-weight:300;font-size:9.5px;color:var(--texto-suave)">YouTube — Bordado Livre BR · Iniciante</div></div>
+            </div>
+            <div class="row" style="cursor:pointer" onclick="showToast('Abrindo aula…')">
+              <div style="width:42px;height:30px;border-radius:5px;background:var(--azul);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-player-play" style="color:#F5F0E8;font-size:14px"></i></div>
+              <div style="flex:1"><div style="font-family:var(--serif);font-size:13px;color:var(--texto)">Ponto Cruz do Zero — Aula 1</div><div style="font-family:var(--sans);font-weight:300;font-size:9.5px;color:var(--texto-suave)">YouTube — Wagner Reis · Iniciante</div></div>
+            </div>
+            <div class="row" style="cursor:pointer" onclick="showToast('Abrindo aula…')">
+              <div style="width:42px;height:30px;border-radius:5px;background:var(--dourado);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-player-play" style="color:#fff;font-size:14px"></i></div>
+              <div style="flex:1"><div style="font-family:var(--serif);font-size:13px;color:var(--texto)">Bordado Floral para Iniciantes</div><div style="font-family:var(--sans);font-weight:300;font-size:9.5px;color:var(--texto-suave)">YouTube — ArtesanArte · Intermediário</div></div>
+            </div>
+            <div class="row" style="cursor:pointer" onclick="showToast('Abrindo aula…')">
+              <div style="width:42px;height:30px;border-radius:5px;background:var(--dourado);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-player-play" style="color:#fff;font-size:14px"></i></div>
+              <div style="flex:1"><div style="font-family:var(--serif);font-size:13px;color:var(--texto)">Ponto Cetim — Como Sombrear</div><div style="font-family:var(--sans);font-weight:300;font-size:9.5px;color:var(--texto-suave)">YouTube — Florescer Bordados · Intermediário</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="sec-label">Diário de Bordado</div>
+        <div class="card">
+          <div class="card-hdr">Anotações e Projetos <span class="card-hdr-sub" onclick="abrirModal('modal-nota-bordado')">+ Nova</span></div>
+          <div class="card-body" id="notas-bordado">
+            <div class="note-row"><span class="note-ico">🧵</span><div style="flex:1"><div class="note-txt">Bastidor menor deixa o bordado mais preciso nos detalhes florais.</div><div class="note-date">Hoje</div></div></div>
+            <div class="note-row"><span class="note-ico">🎨</span><div style="flex:1"><div class="note-txt">Usar linhas de seda para flores delicadas — resultado muito mais bonito.</div><div class="note-date">Ontem</div></div></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="sec-label">Fotos dos Meus Bordados</div>
+        <div class="photo-grid" id="fotos-bordado">
+          <div class="photo-cell">🌸</div>
+          <div class="photo-cell">🦋</div>
+          <div class="photo-cell photo-add" onclick="document.getElementById('input-foto-bordado').click()">
+            <input type="file" id="input-foto-bordado" accept="image/*" onchange="adicionarFoto(this,'fotos-bordado')">
+            <span class="photo-add-icon">📷</span>
+            <span class="photo-add-txt">Adicionar</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CURSOS ── -->
+  <div id="pg-cursos" class="inner-page" style="flex-direction:column;height:100%">
+    <div class="topbar">
+      <div class="topbar-row">
+        <div><div class="topbar-title">Cursos</div><div class="topbar-sub">Culinária e Bordado ✦</div></div>
+      </div>
+    </div>
+    <div class="page-body">
+      <div>
+        <div class="sec-label">Culinária Sem Glúten</div>
+        <div class="card">
+          <div class="card-hdr">Chef Cris Gutierrez</div>
+          <div class="card-body">
+            <div class="row" style="cursor:pointer" onclick="showToast('Abrindo curso…')"><div style="width:42px;height:30px;border-radius:5px;background:var(--azul);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-player-play" style="color:#F5F0E8;font-size:14px"></i></div><div style="flex:1"><div style="font-family:var(--serif);font-size:13px;color:var(--texto)">Padeiro Básico Glúten Free</div><div style="font-family:var(--sans);font-weight:300;font-size:9.5px;color:var(--texto-suave)">escola online · iniciante</div></div><span class="tag verde">grátis</span></div>
+            <div class="row" style="cursor:pointer" onclick="showToast('Abrindo curso…')"><div style="width:42px;height:30px;border-radius:5px;background:var(--azul);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-player-play" style="color:#F5F0E8;font-size:14px"></i></div><div style="flex:1"><div style="font-family:var(--serif);font-size:13px;color:var(--texto)">Pães Low Carb & Sem Glúten</div><div style="font-family:var(--sans);font-weight:300;font-size:9.5px;color:var(--texto-suave)">escola online · intermediário</div></div><span class="tag">pago</span></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="sec-label"> </div>
+        <div class="card">
+          <div class="card-hdr">Marta Midori</div>
+          <div class="card-body">
+            <div class="row" style="cursor:pointer" onclick="showToast('Abrindo canal…')"><div style="width:42px;height:30px;border-radius:5px;background:#C4362A;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-brand-youtube" style="color:#fff;font-size:16px"></i></div><div style="flex:1"><div style="font-family:var(--serif);font-size:13px;color:var(--texto)">Pães e Massas Sem Glúten</div><div style="font-family:var(--sans);font-weight:300;font-size:9.5px;color:var(--texto-suave)">YouTube · 100+ receitas</div></div><span class="tag verde">grátis</span></div>
+            <div class="row" style="cursor:pointer" onclick="showToast('Abrindo canal…')"><div style="width:42px;height:30px;border-radius:5px;background:#C4362A;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-brand-youtube" style="color:#fff;font-size:16px"></i></div><div style="flex:1"><div style="font-family:var(--serif);font-size:13px;color:var(--texto)">Confeitaria Sem Glúten</div><div style="font-family:var(--sans);font-weight:300;font-size:9.5px;color:var(--texto-suave)">YouTube · canal secundário</div></div><span class="tag verde">grátis</span></div>
+            <div class="row" style="cursor:pointer" onclick="showToast('Abrindo referência…')"><div style="width:42px;height:30px;border-radius:5px;background:var(--dourado);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-book" style="color:#fff;font-size:14px"></i></div><div style="flex:1"><div style="font-family:var(--serif);font-size:13px;color:var(--texto)">Livro — 100 Receitas Sem Glúten</div><div style="font-family:var(--sans);font-weight:300;font-size:9.5px;color:var(--texto-suave)">livro publicado · testadas</div></div><span class="tag dourado">livro</span></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="sec-label"> </div>
+        <div class="card">
+          <div class="card-hdr">Mãe de Celíaca</div>
+          <div class="card-body">
+            <div class="row" style="cursor:pointer" onclick="showToast('Abrindo canal…')"><div style="width:42px;height:30px;border-radius:5px;background:#C4362A;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-brand-youtube" style="color:#fff;font-size:16px"></i></div><div style="flex:1"><div style="font-family:var(--serif);font-size:13px;color:var(--texto)">Vida Sem Glúten no Campo</div><div style="font-family:var(--sans);font-weight:300;font-size:9.5px;color:var(--texto-suave)">YouTube · horta e cozinha</div></div><span class="tag verde">grátis</span></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="sec-label">Bordado</div>
+        <div class="card">
+          <div class="card-body">
+            <div class="row" style="cursor:pointer" onclick="showToast('Abrindo aula…')"><div style="width:42px;height:30px;border-radius:5px;background:#C4362A;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-brand-youtube" style="color:#fff;font-size:16px"></i></div><div style="flex:1"><div style="font-family:var(--serif);font-size:13px;color:var(--texto)">Bordado Livre — Do Zero</div><div style="font-family:var(--sans);font-weight:300;font-size:9.5px;color:var(--texto-suave)">Bordado Livre BR · iniciante</div></div><span class="tag verde">grátis</span></div>
+            <div class="row" style="cursor:pointer" onclick="showToast('Abrindo aula…')"><div style="width:42px;height:30px;border-radius:5px;background:#C4362A;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-brand-youtube" style="color:#fff;font-size:16px"></i></div><div style="flex:1"><div style="font-family:var(--serif);font-size:13px;color:var(--texto)">Ponto Cruz do Zero</div><div style="font-family:var(--sans);font-weight:300;font-size:9.5px;color:var(--texto-suave)">Wagner Reis · iniciante</div></div><span class="tag verde">grátis</span></div>
+            <div class="row" style="cursor:pointer" onclick="showToast('Abrindo aula…')"><div style="width:42px;height:30px;border-radius:5px;background:#C4362A;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-brand-youtube" style="color:#fff;font-size:16px"></i></div><div style="flex:1"><div style="font-family:var(--serif);font-size:13px;color:var(--texto)">Bordado Floral para Iniciantes</div><div style="font-family:var(--sans);font-weight:300;font-size:9.5px;color:var(--texto-suave)">ArtesanArte · intermediário</div></div><span class="tag verde">grátis</span></div>
+            <div class="row" style="cursor:pointer" onclick="showToast('Abrindo aula…')"><div style="width:42px;height:30px;border-radius:5px;background:var(--dourado);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-player-play" style="color:#fff;font-size:14px"></i></div><div style="flex:1"><div style="font-family:var(--serif);font-size:13px;color:var(--texto)">Ponto Cetim — Como Sombrear</div><div style="font-family:var(--sans);font-weight:300;font-size:9.5px;color:var(--texto-suave)">Florescer Bordados · intermediário</div></div><span class="tag verde">grátis</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MEU CANTINHO ── -->
+  <div id="pg-cantinho" class="inner-page" style="flex-direction:column;height:100%">
+    <div class="topbar">
+      <div class="topbar-row">
+        <div><div class="topbar-title">Meu Cantinho</div><div class="topbar-sub">Tudo que é seu, Ise ✦</div></div>
+      </div>
+    </div>
+    <div class="page-body">
+      <div>
+        <div class="sec-label">Receitas Favoritas</div>
+        <div id="favoritos-list">
+          <div class="empty-state" id="fav-empty" style="display:none">
+            <span class="empty-icon">🤍</span>
+            <p>Nenhuma receita favorita ainda.<br>Toque no ♡ dentro de uma receita.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="sec-label">Lista de Compras</div>
+        <div class="card">
+          <div class="card-hdr">Ingredientes <span class="card-hdr-sub" onclick="limparCompras()">Limpar</span></div>
+          <div class="card-body" id="lista-compras">
+            <div class="compra-row"><div class="compra-chk" onclick="toggleCompra(this)"></div><div style="flex:1"><div class="compra-txt">3 ovos</div><div class="compra-src">Bolo de Cenoura</div></div></div>
+            <div class="compra-row"><div class="compra-chk" onclick="toggleCompra(this)"></div><div style="flex:1"><div class="compra-txt">½ xícara de óleo de coco</div><div class="compra-src">Bolo de Cenoura</div></div></div>
+            <div class="compra-row"><div class="compra-chk on">✓</div><div style="flex:1"><div class="compra-txt done">Farinha de arroz</div><div class="compra-src">Bolo de Cenoura</div></div></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="sec-label">Cozinhei Esta Semana</div>
+        <div class="card">
+          <div class="card-body" style="gap:8px;padding:12px 13px">
+            <div class="week-row" id="semana-dots">
+              <div class="wday"><div class="wlbl">Seg</div><div class="wdot on" onclick="toggleDia(this)">✓</div></div>
+              <div class="wday"><div class="wlbl">Ter</div><div class="wdot on" onclick="toggleDia(this)">✓</div></div>
+              <div class="wday"><div class="wlbl">Qua</div><div class="wdot" onclick="toggleDia(this)">·</div></div>
+              <div class="wday"><div class="wlbl">Qui</div><div class="wdot on" onclick="toggleDia(this)">✓</div></div>
+              <div class="wday"><div class="wlbl">Sex</div><div class="wdot" onclick="toggleDia(this)">·</div></div>
+              <div class="wday"><div class="wlbl">Sáb</div><div class="wdot" onclick="toggleDia(this)">·</div></div>
+              <div class="wday"><div class="wlbl">Dom</div><div class="wdot" onclick="toggleDia(this)">·</div></div>
+            </div>
+            <div style="font-size:10px;color:var(--texto-suave);font-family:var(--sans);text-align:center" id="semana-txt">3 dias cozinhando esta semana 🌿</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="sec-label">Diário da Cozinha</div>
+        <div class="card">
+          <div class="card-hdr">Anotações Rápidas <span class="card-hdr-sub" onclick="abrirModal('modal-nota-cozinha')">+ Nova</span></div>
+          <div class="card-body" id="notas-cozinha">
+            <div class="note-row"><span class="note-ico">📝</span><div style="flex:1"><div class="note-txt">O bolo ficou melhor com farinha de amêndoas na metade da farinha de arroz.</div><div class="note-date">Hoje</div></div></div>
+            <div class="note-row"><span class="note-ico">💡</span><div style="flex:1"><div class="note-txt">Adicionar uma pitada de cúrcuma ao pão de queijo dá uma cor linda.</div><div class="note-date">Ontem</div></div></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="sec-label">Minhas Fotos</div>
+        <div class="photo-grid" id="fotos-cantinho">
+          <div class="photo-cell">🥘</div>
+          <div class="photo-cell">🎂</div>
+          <div class="photo-cell photo-add" onclick="document.getElementById('input-foto-cantinho').click()">
+            <input type="file" id="input-foto-cantinho" accept="image/*" onchange="adicionarFoto(this,'fotos-cantinho')">
+            <span class="photo-add-icon">📷</span>
+            <span class="photo-add-txt">Adicionar</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="sec-label">Minhas Referências</div>
+        <div class="link-box">
+          <i class="ti ti-link" style="font-size:15px;color:var(--border)"></i>
+          <input type="text" class="link-input" id="link-input" placeholder="Cole um link aqui…">
+          <button onclick="salvarLink()" style="background:var(--azul);color:#fff;border:none;border-radius:6px;padding:6px 12px;font-family:var(--sans);font-size:11px;cursor:pointer">Salvar</button>
+        </div>
+        <div class="pills-row" style="margin-top:8px" id="filtros-ref">
+          <span class="pill active" onclick="filtrarRef(this,'todos')">Todos</span>
+          <span class="pill" onclick="filtrarRef(this,'youtube')">YouTube</span>
+          <span class="pill" onclick="filtrarRef(this,'site')">Site</span>
+          <span class="pill" onclick="filtrarRef(this,'instagram')">Instagram</span>
+          <span class="pill" onclick="filtrarRef(this,'pinterest')">Pinterest</span>
+        </div>
+        <div style="height:8px"></div>
+        <div id="refs-list">
+          <div class="saved-ref"><span class="saved-type">Vídeo</span><div style="flex:1"><div class="saved-name">Pão sem glúten fofinho</div><div class="saved-src">youtube · Marta Midori</div></div><button class="saved-del" onclick="this.closest('.saved-ref').remove()">✕</button></div>
+          <div class="saved-ref"><span class="saved-type">Foto</span><div style="flex:1"><div class="saved-name">Bordado floral — inspiração</div><div class="saved-src">pinterest salvo</div></div><button class="saved-del" onclick="this.closest('.saved-ref').remove()">✕</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RECEITA DETALHE ── -->
+  <div id="pg-receita" class="inner-page" style="flex-direction:column;height:100%">
+    <div class="topbar" id="receita-topbar">
+      <div class="topbar-row">
+        <button class="topbar-back" onclick="voltarReceitas()">
+          <i class="ti ti-arrow-left"></i>
+          <div class="topbar-title" id="receita-titulo">Receita</div>
+        </button>
+        <div class="topbar-actions">
+          <button id="btn-fav" onclick="toggleFavorito()" title="Favoritar"><i class="ti ti-heart"></i></button>
+          <button onclick="ativarModoLeitura()" title="Modo leitura"><i class="ti ti-eye"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="page-body" id="receita-body-detail">
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav-bar">
+    <button class="nav-item active" onclick="navegar('inicio')">
+      <i class="ti ti-home"></i><span>Início</span>
+    </button>
+    <button class="nav-item" onclick="navegar('receitas')">
+      <i class="ti ti-bowl"></i><span>Receitas</span>
+    </button>
+    <button class="nav-item" onclick="navegar('bordado')">
+      <i class="ti ti-scissors"></i><span>Bordado</span>
+    </button>
+    <button class="nav-item" onclick="navegar('cursos')">
+      <i class="ti ti-player-play"></i><span>Cursos</span>
+    </button>
+    <button class="nav-item" onclick="navegar('cantinho')">
+      <i class="ti ti-heart"></i><span>Meu Cantinho</span>
+    </button>
+  </nav>
+</div>
+
+<!-- ══ MODO LEITURA ══ -->
+<div id="modo-leitura">
+  <div style="display:flex;align-items:center;justify-content:space-between">
+    <div class="ml-title" id="ml-titulo">Receita</div>
+    <button onclick="fecharModoLeitura()" style="background:none;border:none;font-size:22px;color:var(--texto-suave);cursor:pointer">✕</button>
+  </div>
+  <div id="ml-steps"></div>
+  <button class="ml-close" onclick="fecharModoLeitura()">Fechar modo leitura</button>
+</div>
+
+<!-- ══ TIMER MODAL ══ -->
+<div class="timer-overlay" id="timer-overlay" onclick="fecharTimer(event)">
+  <div class="timer-sheet">
+    <div class="timer-title" id="timer-label">Timer do Forno</div>
+    <div class="timer-display" id="timer-display">00:40:00</div>
+    <div class="timer-btns">
+      <button class="timer-btn reset" onclick="resetTimer()"><i class="ti ti-refresh"></i></button>
+      <button class="timer-btn play" id="timer-play-btn" onclick="toggleTimer()"><i class="ti ti-player-play"></i></button>
+      <button class="timer-btn close" onclick="fecharTimer()">✕</button>
+    </div>
+    <div class="timer-label" id="timer-sub">Toque ▶ para iniciar</div>
+  </div>
+</div>
+
+<!-- ══ MODAIS ══ -->
+<div class="modal-overlay" id="modal-nota-cozinha" onclick="fecharModal(event,'modal-nota-cozinha')">
+  <div class="modal-sheet">
+    <div class="modal-title">Nova Anotação</div>
+    <textarea class="modal-input" id="input-nota-cozinha" rows="4" placeholder="Escreva aqui sua dica, substituição ou observação…"></textarea>
+    <button class="modal-btn" onclick="salvarNota('cozinha')">Salvar</button>
+    <button class="modal-btn-sec" onclick="fecharModal(null,'modal-nota-cozinha')">Cancelar</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-nota-bordado" onclick="fecharModal(event,'modal-nota-bordado')">
+  <div class="modal-sheet">
+    <div class="modal-title">Nova Anotação de Bordado</div>
+    <textarea class="modal-input" id="input-nota-bordado" rows="4" placeholder="Ponto novo, material usado, observação do projeto…"></textarea>
+    <button class="modal-btn" onclick="salvarNota('bordado')">Salvar</button>
+    <button class="modal-btn-sec" onclick="fecharModal(null,'modal-nota-bordado')">Cancelar</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-wishlist" onclick="fecharModal(event,'modal-wishlist')">
+  <div class="modal-sheet">
+    <div class="modal-title">Quero Fazer</div>
+    <input type="text" class="modal-input" id="input-wishlist" placeholder="Nome da receita ou projeto…">
+    <button class="modal-btn" onclick="salvarWishlist()">Adicionar</button>
+    <button class="modal-btn-sec" onclick="fecharModal(null,'modal-wishlist')">Cancelar</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── DADOS DAS RECEITAS ──
+const receitas = [
+  {
+    id:0, nome:'Bolo de Cenoura com Farinha de Arroz', emoji:'🎂',
+    cat:'doce', tempo:'45 min', porcoes:'8 porções', nivel:'Fácil',
+    ingredientes:['3 cenouras médias raladas','1 xícara de farinha de arroz','3 ovos','½ xícara de óleo de coco','1 xícara de açúcar demerara','1 colher de sopa de fermento em pó'],
+    passos:[
+      {txt:'Preaqueça o forno a 180°C.', forno:null},
+      {txt:'Bata no liquidificador as cenouras, os ovos e o óleo até ficar homogêneo.', forno:null},
+      {txt:'Em uma tigela, misture a farinha de arroz, o açúcar e o fermento.', forno:null},
+      {txt:'Junte a mistura líquida à seca e mexa até incorporar completamente.', forno:null},
+      {txt:'Despeje em forma untada e asse por 40 minutos.', forno:{label:'Forno — 40 min', min:40}}
+    ]
+  },
+  {
+    id:1, nome:'Pão de Queijo Caseiro', emoji:'🧀',
+    cat:'salgado', tempo:'30 min', porcoes:'20 unidades', nivel:'Fácil',
+    ingredientes:['2 xícaras de polvilho azedo','1 xícara de leite','½ xícara de óleo','1 colher de sal','2 ovos','1½ xícara de queijo minas ralado'],
+    passos:[
+      {txt:'Aqueça o leite com o óleo e o sal até quase ferver.', forno:null},
+      {txt:'Despeje sobre o polvilho e misture bem até esfriar levemente.', forno:null},
+      {txt:'Acrescente os ovos e o queijo ralado, amasse até dar liga.', forno:null},
+      {txt:'Forme bolinhas e coloque em assadeira untada.', forno:null},
+      {txt:'Asse em forno preaquecido a 200°C por 25 minutos.', forno:{label:'Forno — 25 min', min:25}}
+    ]
+  },
+  {
+    id:2, nome:'Nhoque de Batata-Doce', emoji:'🥔',
+    cat:'salgado', tempo:'40 min', porcoes:'4 porções', nivel:'Médio',
+    ingredientes:['500g de batata-doce cozida e amassada','1 xícara de polvilho doce','1 ovo','Sal e noz-moscada a gosto'],
+    passos:[
+      {txt:'Cozinhe a batata-doce e amasse bem até ficar sem grumos.', forno:null},
+      {txt:'Misture o ovo, o polvilho, o sal e a noz-moscada.', forno:null},
+      {txt:'Trabalhe a massa até ficar lisa e não grudar nas mãos.', forno:null},
+      {txt:'Role em rolinhos e corte os nhoques.', forno:null},
+      {txt:'Cozinhe em água fervente com sal até boiarem (cerca de 3 min).', forno:null},
+      {txt:'Sirva com o molho de sua preferência.', forno:null}
+    ]
+  },
+  {
+    id:3, nome:'Tapioca de Frango Desfiado', emoji:'🥞',
+    cat:'salgado rapida', tempo:'15 min', porcoes:'2 porções', nivel:'Fácil',
+    ingredientes:['4 colheres de goma de tapioca hidratada','100g de frango desfiado temperado','Queijo coalho a gosto','Sal e temperos a gosto'],
+    passos:[
+      {txt:'Espalhe a goma em frigideira antiaderente quente em fogo médio.', forno:null},
+      {txt:'Aguarde 2 minutos até a tapioca firmar e soltar das bordas.', forno:{label:'Aguardar — 2 min', min:2}},
+      {txt:'Adicione o frango e o queijo coalho sobre metade da tapioca.', forno:null},
+      {txt:'Dobre ao meio e sirva quente.', forno:null}
+    ]
+  },
+  {
+    id:4, nome:'Pão de Mandioca sem Glúten', emoji:'🍞',
+    cat:'pao', tempo:'60 min', porcoes:'1 pão', nivel:'Médio',
+    ingredientes:['2 xícaras de polvilho azedo','1 xícara de mandioca cozida e amassada','2 ovos','¼ xícara de azeite','1 colher de sal','1 colher de fermento em pó'],
+    passos:[
+      {txt:'Misture o polvilho com a mandioca amassada.', forno:null},
+      {txt:'Acrescente os ovos, o azeite e o sal. Misture bem.', forno:null},
+      {txt:'Adicione o fermento por último e misture delicadamente.', forno:null},
+      {txt:'Coloque em forma de pão untada.', forno:null},
+      {txt:'Asse a 180°C por 50 minutos.', forno:{label:'Forno — 50 min', min:50}}
+    ]
+  },
+  {
+    id:5, nome:'Brownie de Chocolate sem Farinha', emoji:'🍫',
+    cat:'doce festa', tempo:'35 min', porcoes:'12 pedaços', nivel:'Fácil',
+    ingredientes:['200g de chocolate meio amargo','½ xícara de manteiga sem sal','1 xícara de açúcar','3 ovos','½ xícara de cacau em pó','1 colher de baunilha'],
+    passos:[
+      {txt:'Derreta o chocolate com a manteiga em banho-maria.', forno:null},
+      {txt:'Misture o açúcar e a baunilha ao chocolate derretido.', forno:null},
+      {txt:'Acrescente os ovos um a um, misturando bem.', forno:null},
+      {txt:'Incorpore o cacau em pó peneirado.', forno:null},
+      {txt:'Despeje em forma untada e asse a 180°C por 25 minutos.', forno:{label:'Forno — 25 min', min:25}}
+    ]
+  },
+  {
+    id:6, nome:'Omelete de Abobrinha com Queijo', emoji:'🍳',
+    cat:'salgado rapida', tempo:'10 min', porcoes:'1 porção', nivel:'Fácil',
+    ingredientes:['2 ovos','½ abobrinha pequena ralada','2 colheres de queijo parmesão','Sal, pimenta e ervas a gosto'],
+    passos:[
+      {txt:'Bata os ovos e tempere com sal e pimenta.', forno:null},
+      {txt:'Adicione a abobrinha ralada e o parmesão à mistura.', forno:null},
+      {txt:'Aqueça a frigideira untada e despeje a mistura.', forno:null},
+      {txt:'Tampe e cozinhe em fogo baixo por 4 minutos.', forno:{label:'Aguardar — 4 min', min:4}},
+      {txt:'Sirva dobrado com ervas frescas por cima.', forno:null}
+    ]
+  },
+  {
+    id:7, nome:'Panqueca de Banana com Aveia', emoji:'🥞',
+    cat:'doce', tempo:'20 min', porcoes:'4 panquecas', nivel:'Fácil',
+    ingredientes:['2 bananas maduras','2 ovos','½ xícara de aveia sem glúten','1 colher de canela','Mel para servir'],
+    passos:[
+      {txt:'Amasse bem as bananas com um garfo.', forno:null},
+      {txt:'Misture os ovos, a aveia e a canela.', forno:null},
+      {txt:'Frite pequenas porções em frigideira untada até dourar dos dois lados.', forno:null},
+      {txt:'Sirva com mel e frutas frescas.', forno:null}
+    ]
+  }
+];
+
+// ── ESTADO ──
+let receitaAtual = null;
+let favs = [];
+let timerInterval = null;
+let timerSeg = 0;
+let timerRodando = false;
+let chksIng = [];
+let chksStep = [];
+
+// ── SPLASH ──
+function entrar() {
+  document.getElementById('splash').classList.remove('active');
+  document.getElementById('app').classList.add('active');
+  setGreeting();
+  renderFavoritos();
+}
+
+function setGreeting() {
+  const h = new Date().getHours();
+  let g = h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite';
+  document.getElementById('greeting-sub').textContent = g + ', Ise ✦';
+}
+
+// ── NAVEGAÇÃO ──
+function navegar(pg) {
+  document.querySelectorAll('.inner-page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  document.getElementById('pg-' + pg).classList.add('active');
+  const idx = ['inicio','receitas','bordado','cursos','cantinho'].indexOf(pg);
+  document.querySelectorAll('.nav-item')[idx].classList.add('active');
+  if (pg !== 'receita') document.getElementById('nav-bar').style.display = 'flex';
+}
+
+// ── RECEITA ──
+function abrirReceita(id) {
+  receitaAtual = receitas[id];
+  chksIng = new Array(receitaAtual.ingredientes.length).fill(false);
+  chksStep = new Array(receitaAtual.passos.length).fill(false);
+
+  document.getElementById('receita-titulo').textContent = receitaAtual.nome;
+
+  const isFav = favs.includes(id);
+  const btnFav = document.getElementById('btn-fav');
+  btnFav.classList.toggle('fav-on', isFav);
+  btnFav.querySelector('i').className = isFav ? 'ti ti-heart-filled' : 'ti ti-heart';
+
+  renderReceitaDetail();
+
+  document.querySelectorAll('.inner-page').forEach(p => p.classList.remove('active'));
+  document.getElementById('pg-receita').classList.add('active');
+  document.getElementById('nav-bar').style.display = 'flex';
+
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.nav-item')[1].classList.add('active');
+}
+
+function renderReceitaDetail() {
+  const r = receitaAtual;
+  const body = document.getElementById('receita-body-detail');
+  body.innerHTML = `
+    <div class="recipe-hero">
+      <span class="recipe-hero-emoji">${r.emoji}</span>
+      <label class="add-photo-btn" for="foto-receita-input">
+        <i class="ti ti-camera"></i> Adicionar foto
+      </label>
+      <input type="file" id="foto-receita-input" accept="image/*" onchange="fotoReceita(this)" style="display:none">
+    </div>
+    <div class="badges-row">
+      <span class="tag verde">Sem glúten</span>
+      <span class="tag">⏱ ${r.tempo}</span>
+      <span class="tag">👤 ${r.porcoes}</span>
+      <span class="tag">${r.nivel}</span>
+    </div>
+    <div>
+      <div class="sec-label">Ingredientes</div>
+      <div class="card">
+        <div class="card-hdr">Lista de Ingredientes <span class="card-hdr-sub" onclick="showToast('Edição em breve')">✎ Editar</span></div>
+        <div class="card-body" id="ing-list">
+          ${r.ingredientes.map((ing,i) => `
+            <div class="ing-row">
+              <div class="chk ${chksIng[i]?'on':''}" onclick="toggleIng(${i})">${chksIng[i]?'✓':''}</div>
+              <div class="ing-txt ${chksIng[i]?'done':''}" id="ing-${i}">${ing}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="sec-label">Modo de Preparo</div>
+      <div class="card">
+        <div class="card-hdr">Passo a Passo <span class="card-hdr-sub" onclick="showToast('Edição em breve')">✎ Editar</span></div>
+        <div class="card-body" id="step-list">
+          ${r.passos.map((p,i) => `
+            <div class="step-row">
+              <button class="snum ${chksStep[i]?'on':''}" onclick="toggleStep(${i})">${i+1}</button>
+              <div style="flex:1">
+                <div class="step-txt ${chksStep[i]?'done':''}" id="step-${i}">${p.txt}</div>
+                ${p.forno ? `<button class="forno-btn" onclick="abrirTimer('${p.forno.label}',${p.forno.min})">🔥 ${p.forno.label}</button>` : ''}
+              </div>
+            </div>`).join('')}
+        </div>
+      </div>
+    </div>
+    <button onclick="adicionarCompras()" style="width:100%;background:var(--azul-claro);color:var(--azul);border:.5px solid var(--border);border-radius:8px;padding:11px;font-family:var(--sans);font-size:12px;cursor:pointer;letter-spacing:.04em">
+      <i class="ti ti-shopping-cart" style="vertical-align:middle;margin-right:4px"></i> Adicionar ingredientes à lista de compras
+    </button>
+  `;
+}
+
+function fotoReceita(input) {
+  if (!input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const hero = document.querySelector('.recipe-hero');
+    hero.innerHTML = `<img src="${e.target.result}" alt="Foto da receita">`;
+    showToast('Foto adicionada! 📷');
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function toggleIng(i) {
+  chksIng[i] = !chksIng[i];
+  const chk = document.querySelectorAll('.chk')[i];
+  const txt = document.getElementById('ing-' + i);
+  chk.classList.toggle('on', chksIng[i]);
+  chk.textContent = chksIng[i] ? '✓' : '';
+  txt.classList.toggle('done', chksIng[i]);
+}
+
+function toggleStep(i) {
+  chksStep[i] = !chksStep[i];
+  const btn = document.querySelectorAll('.snum')[i];
+  const txt = document.getElementById('step-' + i);
+  btn.classList.toggle('on', chksStep[i]);
+  txt.classList.toggle('done', chksStep[i]);
+}
+
+function voltarReceitas() {
+  navegar('receitas');
+}
+
+function toggleFavorito() {
+  if (!receitaAtual) return;
+  const id = receitaAtual.id;
+  const btn = document.getElementById('btn-fav');
+  if (favs.includes(id)) {
+    favs = favs.filter(f => f !== id);
+    btn.classList.remove('fav-on');
+    btn.querySelector('i').className = 'ti ti-heart';
+    showToast('Removido dos favoritos');
+  } else {
+    favs.push(id);
+    btn.classList.add('fav-on');
+    btn.querySelector('i').className = 'ti ti-heart-filled';
+    showToast('Adicionado aos favoritos ♡');
+  }
+  renderFavoritos();
+}
+
+function renderFavoritos() {
+  const list = document.getElementById('favoritos-list');
+  const empty = document.getElementById('fav-empty');
+  if (!list) return;
+  list.innerHTML = '';
+  if (favs.length === 0) {
+    list.innerHTML = `<div class="empty-state"><span class="empty-icon">🤍</span><p>Nenhuma receita favorita ainda.<br>Toque no ♡ dentro de uma receita.</p></div>`;
+    return;
+  }
+  favs.forEach(id => {
+    const r = receitas[id];
+    const el = document.createElement('div');
+    el.className = 'fav-card';
+    el.onclick = () => abrirReceita(id);
+    el.innerHTML = `
+      <div class="fav-emoji">${r.emoji}</div>
+      <div style="flex:1"><div class="fav-name">${r.nome}</div><div class="fav-meta">Sem glúten · ${r.tempo} · ${r.nivel}</div></div>
+      <i class="ti ti-heart-filled fav-heart"></i>`;
+    list.appendChild(el);
+  });
+}
+
+// ── MODO LEITURA ──
+function ativarModoLeitura() {
+  const r = receitaAtual;
+  document.getElementById('ml-titulo').textContent = r.nome;
+  document.getElementById('ml-steps').innerHTML = r.passos.map((p,i) => `
+    <div class="ml-step">
+      <div class="ml-num">${i+1}</div>
+      <div class="ml-txt">${p.txt}</div>
+    </div>`).join('');
+  document.getElementById('modo-leitura').classList.add('active');
+  if ('wakeLock' in navigator) navigator.wakeLock.request('screen').catch(()=>{});
+}
+function fecharModoLeitura() {
+  document.getElementById('modo-leitura').classList.remove('active');
+}
+
+// ── TIMER ──
+function abrirTimer(label, min) {
+  timerSeg = min * 60;
+  timerRodando = false;
+  clearInterval(timerInterval);
+  document.getElementById('timer-label').textContent = label;
+  document.getElementById('timer-display').textContent = formatTimer(timerSeg);
+  document.getElementById('timer-play-btn').innerHTML = '<i class="ti ti-player-play"></i>';
+  document.getElementById('timer-sub').textContent = 'Toque ▶ para iniciar';
+  document.getElementById('timer-overlay').classList.add('active');
+}
+function fecharTimer(e) {
+  if (e && e.target !== document.getElementById('timer-overlay')) return;
+  clearInterval(timerInterval);
+  timerRodando = false;
+  document.getElementById('timer-overlay').classList.remove('active');
+}
+function toggleTimer() {
+  if (timerRodando) {
+    clearInterval(timerInterval);
+    timerRodando = false;
+    document.getElementById('timer-play-btn').innerHTML = '<i class="ti ti-player-play"></i>';
+    document.getElementById('timer-sub').textContent = 'Pausado';
+  } else {
+    timerRodando = true;
+    document.getElementById('timer-play-btn').innerHTML = '<i class="ti ti-player-pause"></i>';
+    document.getElementById('timer-sub').textContent = 'Contando…';
+    timerInterval = setInterval(() => {
+      timerSeg--;
+      document.getElementById('timer-display').textContent = formatTimer(timerSeg);
+      if (timerSeg <= 0) {
+        clearInterval(timerInterval);
+        timerRodando = false;
+        document.getElementById('timer-display').textContent = '00:00:00';
+        document.getElementById('timer-sub').textContent = '✓ Pronto!';
+        document.getElementById('timer-play-btn').innerHTML = '<i class="ti ti-player-play"></i>';
+      }
+    }, 1000);
+  }
+}
+function resetTimer() {
+  clearInterval(timerInterval);
+  timerRodando = false;
+  document.getElementById('timer-play-btn').innerHTML = '<i class="ti ti-player-play"></i>';
+  document.getElementById('timer-sub').textContent = 'Toque ▶ para iniciar';
+  document.getElementById('timer-display').textContent = formatTimer(timerSeg);
+}
+function formatTimer(s) {
+  const h = Math.floor(s/3600), m = Math.floor((s%3600)/60), sec = s%60;
+  return [h,m,sec].map(x=>String(x).padStart(2,'0')).join(':');
+}
+
+// ── COMPRAS ──
+function adicionarCompras() {
+  const r = receitaAtual;
+  const lista = document.getElementById('lista-compras');
+  const marcados = chksIng.map((c,i) => c ? null : r.ingredientes[i]).filter(Boolean);
+  if (marcados.length === 0) { showToast('Todos os ingredientes já marcados!'); return; }
+  marcados.forEach(ing => {
+    const div = document.createElement('div');
+    div.className = 'compra-row';
+    div.innerHTML = `
+      <div class="compra-chk" onclick="toggleCompra(this)"></div>
+      <div style="flex:1">
+        <div class="compra-txt">${ing}</div>
+        <div class="compra-src">${r.nome}</div>
+      </div>`;
+    lista.appendChild(div);
+  });
+  showToast(`${marcados.length} ingredientes adicionados à lista ✓`);
+}
+function toggleCompra(el) {
+  el.classList.toggle('on');
+  el.textContent = el.classList.contains('on') ? '✓' : '';
+  const txt = el.nextElementSibling?.querySelector('.compra-txt');
+  if (txt) txt.classList.toggle('done', el.classList.contains('on'));
+}
+function limparCompras() {
+  document.getElementById('lista-compras').innerHTML = '';
+  showToast('Lista de compras limpa');
+}
+
+// ── FILTROS RECEITAS ──
+function filtrar(btn, cat) {
+  document.querySelectorAll('#filtros-receitas .filtro-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#receitas-body .row').forEach(row => {
+    const c = row.dataset.cat || '';
+    row.style.display = (cat === 'todas' || c.includes(cat)) ? 'flex' : 'none';
+  });
+}
+
+// ── SEMANA ──
+function toggleDia(dot) {
+  dot.classList.toggle('on');
+  dot.textContent = dot.classList.contains('on') ? '✓' : '·';
+  const total = document.querySelectorAll('#semana-dots .wdot.on').length;
+  document.getElementById('semana-txt').textContent = `${total} dia${total!==1?'s':''} cozinhando esta semana 🌿`;
+}
+
+// ── NOTAS ──
+function salvarNota(tipo) {
+  const inputId = tipo === 'cozinha' ? 'input-nota-cozinha' : 'input-nota-bordado';
+  const listId = tipo === 'cozinha' ? 'notas-cozinha' : 'notas-bordado';
+  const modalId = 'modal-nota-' + tipo;
+  const txt = document.getElementById(inputId).value.trim();
+  if (!txt) return;
+  const emojis = { cozinha: '📝', bordado: '🧵' };
+  const div = document.createElement('div');
+  div.className = 'note-row';
+  div.innerHTML = `<span class="note-ico">${emojis[tipo]}</span><div style="flex:1"><div class="note-txt">${txt}</div><div class="note-date">Agora</div></div>`;
+  document.getElementById(listId).prepend(div);
+  document.getElementById(inputId).value = '';
+  fecharModal(null, modalId);
+  showToast('Anotação salva ✓');
+}
+
+// ── WISHLIST ──
+function salvarWishlist() {
+  const txt = document.getElementById('input-wishlist').value.trim();
+  if (!txt) return;
+  const div = document.createElement('div');
+  div.className = 'wishlist-card';
+  div.innerHTML = `<div class="wishlist-emoji">🍴</div><div style="flex:1"><div class="wishlist-name">${txt}</div><div class="wishlist-meta">Adicionado agora</div></div><button class="wishlist-del" onclick="this.closest('.wishlist-card').remove()">✕</button>`;
+  document.getElementById('quero-fazer-list').appendChild(div);
+  document.getElementById('input-wishlist').value = '';
+  fecharModal(null, 'modal-wishlist');
+  showToast('Adicionado à lista ✓');
+}
+
+// ── LINKS ──
+function salvarLink() {
+  const input = document.getElementById('link-input');
+  const url = input.value.trim();
+  if (!url) return;
+  let tipo = 'Site', nome = url;
+  if (url.includes('youtube') || url.includes('youtu.be')) { tipo = 'Vídeo'; nome = 'Vídeo do YouTube'; }
+  else if (url.includes('instagram')) { tipo = 'Instagram'; nome = 'Post do Instagram'; }
+  else if (url.includes('pinterest')) { tipo = 'Pinterest'; nome = 'Pin salvo'; }
+  const div = document.createElement('div');
+  div.className = 'saved-ref';
+  div.innerHTML = `<span class="saved-type">${tipo}</span><div style="flex:1"><div class="saved-name">${nome}</div><div class="saved-src">${url.slice(0,40)}…</div></div><button class="saved-del" onclick="this.closest('.saved-ref').remove()">✕</button>`;
+  document.getElementById('refs-list').prepend(div);
+  input.value = '';
+  showToast('Referência salva ✓');
+}
+function filtrarRef(btn, cat) {
+  document.querySelectorAll('#filtros-ref .pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ── FOTOS ──
+function adicionarFoto(input, containerId) {
+  if (!input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const container = document.getElementById(containerId);
+    const addBtn = container.querySelector('.photo-add');
+    const cell = document.createElement('div');
+    cell.className = 'photo-cell';
+    cell.innerHTML = `<img src="${e.target.result}" alt="Foto">`;
+    container.insertBefore(cell, addBtn);
+    showToast('Foto adicionada! 📷');
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+// ── MODAIS ──
+function abrirModal(id) { document.getElementById(id).classList.add('active'); }
+function fecharModal(e, id) {
+  if (e && e.target !== document.getElementById(id)) return;
+  document.getElementById(id).classList.remove('active');
+}
+
+// ── TOAST ──
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+// ── INIT ──
+document.getElementById('link-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') salvarLink();
+});
+</script>
+</body>
+</html>
